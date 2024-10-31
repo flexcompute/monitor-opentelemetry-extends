@@ -10,12 +10,12 @@ import io.opentelemetry.javaagent.shaded.io.opentelemetry.context.Context;
 @AutoService(HttpServerResponseCustomizer.class)
 public class AgentHttpResponseCustomizer implements HttpServerResponseCustomizer {
     @Override
-    public <RESPONSE> void customize(Context context, RESPONSE response, HttpServerResponseMutator<RESPONSE> responseMutator) {
+public <RESPONSE> void customize(Context context, RESPONSE response, HttpServerResponseMutator<RESPONSE> responseMutator) {
         SpanContext spanContext = Span.fromContext(context).getSpanContext();
         String traceId = spanContext.getTraceId();
         String spanId = spanContext.getSpanId();
 
-        // 在 HTTP Response Header中设置 traceId 和 spanId, Header 字段名可以自定义
+        // Set traceId and spanId into HTTP Response Header
         responseMutator.appendHeader(response, "otm-trace-id", traceId);
         responseMutator.appendHeader(response, "otm-span-id", spanId);
     }
