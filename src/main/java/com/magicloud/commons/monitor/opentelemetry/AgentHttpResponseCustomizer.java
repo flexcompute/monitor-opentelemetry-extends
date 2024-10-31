@@ -11,12 +11,16 @@ import io.opentelemetry.javaagent.shaded.io.opentelemetry.context.Context;
 public class AgentHttpResponseCustomizer implements HttpServerResponseCustomizer {
     @Override
 public <RESPONSE> void customize(Context context, RESPONSE response, HttpServerResponseMutator<RESPONSE> responseMutator) {
-        SpanContext spanContext = Span.fromContext(context).getSpanContext();
-        String traceId = spanContext.getTraceId();
-        String spanId = spanContext.getSpanId();
+        try {
+            SpanContext spanContext = Span.fromContext(context).getSpanContext();
+            String traceId = spanContext.getTraceId();
+            String spanId = spanContext.getSpanId();
 
-        // Set traceId and spanId into HTTP Response Header
-        responseMutator.appendHeader(response, "otm-trace-id", traceId);
-        responseMutator.appendHeader(response, "otm-span-id", spanId);
+            // Set traceId and spanId into HTTP Response Header
+            responseMutator.appendHeader(response, "otm-trace-id", traceId);
+            responseMutator.appendHeader(response, "otm-span-id", spanId);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
