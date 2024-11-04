@@ -26,7 +26,10 @@ repositories {
 
 dependencies {
     implementation "com.google.auto.service:auto-service:1.1.1"
-    implementation "io.opentelemetry.javaagent:opentelemetry-javaagent:2.9.0"
+    implementation "io.opentelemetry:opentelemetry-sdk-trace:1.28.0"
+    implementation "io.opentelemetry:opentelemetry-semconv:1.28.0-alpha"
+    implementation "io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:1.28.0"
+    implementation "io.opentelemetry.javaagent:opentelemetry-javaagent:1.28.0"
 }
 
 test {
